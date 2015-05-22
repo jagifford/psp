@@ -1,0 +1,41 @@
+/*******************
+TABLETS/SMALL SCREENS
+*******************/
+
+@media screen and (min-width: 480px) {
+
+}
+
+
+
+/*******************
+DESKTOP
+*******************/
+
+@media screen and (min-width: 660px) {
+
+    /*******************
+    HEADER
+    *******************/
+
+    nav {
+        float: right;
+        font-size: 1.125em;
+        margin-right: 10%;
+        text-align: right;
+        width: 40%;
+        background: none;
+        -webkit-box-shadow: 0 0 0 black;
+    }
+
+    #logo {
+        float: left;
+        margin-left: 10%;
+        text-align: left;
+        width: 40%;
+    }
+
+    header {
+        -webkit-box-shadow: 0 0 4px black;
+    }
+}

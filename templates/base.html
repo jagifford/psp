@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'base/style.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'base/responsive.css' %}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PSPNow{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <div id="wrapper">
+            {% if messages %}
+                <messages>
+                    {% for message in messages %}
+                        <div id="message"{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </messages>
+            {% endif %}
+            <header>
+                <a href="{% url 'index' %}" id="logo">
+                    <h1><i>PSPNow</i></h1>
+                </a>
+                <nav>
+                    <ul>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'profile:profile' user.username %}">{{ user.username|upper }}</a></li>
+                            <li><a href="{% url 'account:account' %}">ACCOUNT</a></li>
+                            {% if user.is_superuser %}
+                                <li><a href="{% url 'admin:index' %}">ADMIN PAGE</a></li>
+                            {% endif %}
+                            <li><a href="{% url 'account:logout' %}">LOGOUT</a></li>
+                        {% else %}
+                            <li><a href="{% url 'account:login' %}">LOGIN</a></li>
+                            <li><a href="{% url 'account:register' %}">REGISTER</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% block header %}
+                {% endblock %}
+            </header>
+            <div id="content">
+                <section>
+                    {% block content %}
+                    {% endblock %}
+                </section>
+            </div>
+            <footer>
+                <ul>
+                    {% ifnotequal request.path "/report/" %}
+                        <li><a href="">report problem</a></li>
+                    {% endifnotequal %}
+                    <li><a href="{% url 'index' %}">contact</a></li>
+                    <li><a href="{% url 'index' %}">terms and agreement</a></li>
+                </ul>
+                <p>&copy; 2015 Justin Gifford</p>
+                {% block footer %}
+                {% endblock %}
+            </footer>
+        </div>
+    </body>
+</html>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>

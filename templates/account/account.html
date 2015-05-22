@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %} | Account{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<h3>Account</h3>
+<a href="{% url 'account:update' %}">[Update]</a>
+<p>{{ brother.user.first_name }} {{ brother.user.last_name }}</p>
+<p>{{ brother.chapter.name }}</p>
+<p>{{ brother.user.email }}</p>
+{% endblock %}

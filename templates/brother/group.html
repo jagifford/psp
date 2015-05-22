@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %} | Account{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<h2>{{ group.name }}</h2>
+<div id="posts">
+    <h3>Posts</h3>
+    <ul>
+        {% for post in group.posts.all %}
+            <li>
+                <div id="post">
+                    <p class="submitter">{{ post.submitter.user.first_name }} {{ post.submitter.user.last_name }}</p>
+                    <p class="content">{{ post.content }}</p>
+                    <p class="timestamp">{{ post.submit_date }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
