@@ -6,7 +6,7 @@
 {% csrf_token %}
 <h2>{{ brother.user.first_name }} {{ brother.user.last_name }}'s Profile</h2>
 <div id="groups">
-    <h3>Groups</h3>
+    <h3><a href="{% url 'profile:groups' brother.slug %}">Groups</a></h3>
     <ul>
         {% for group in brother.groups.all %}
             <li><a href="{% url 'group:group' group.pk %}">{{ group.name }}</a></li>

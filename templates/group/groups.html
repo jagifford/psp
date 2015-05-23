@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %} | Groups{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div id="groups">
+    <h3><a href="{% url 'profile:groups' group.pk %}">Groups</a></h3>
+    <p><a href="{% url 'group:create' %}">New Group</a></p>
+    <ul>
+        {% for group in brother.groups.all %}
+            <li><a href="{% url 'group:group' group.pk %}">{{ group.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

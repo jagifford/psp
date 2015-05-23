@@ -102,3 +102,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+
+# Login
+
+LOGIN_URL = '/account/login'
+LOGOUT_URL = '/account/logout'
+LOGIN_REDIRECT_URL = '/account/'
+
+
+# Session
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False

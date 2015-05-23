@@ -40,12 +40,10 @@
                 {% block header %}
                 {% endblock %}
             </header>
-            <div id="content">
-                <section>
-                    {% block content %}
-                    {% endblock %}
-                </section>
-            </div>
+            <content>
+                {% block content %}
+                {% endblock %}
+            </content>
             <footer>
                 <ul>
                     {% ifnotequal request.path "/report/" %}

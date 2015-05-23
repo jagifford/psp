@@ -2,31 +2,37 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import logout as user_logout, login as user_login
+from django.contrib.auth.decorators import login_required
+
 
 from .forms import RegistrationForm, LoginForm
 from . import models
 
+
+"""
+Mixins
+"""
+class LoginRequiredMixin(object):
+    @classmethod
+    def as_view(cls, **initkwargs):
+        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
+        return login_required(view)
+
+
 """
 Account Views
 """
-class AccountView(generic.DetailView):
+class AccountView(LoginRequiredMixin, generic.DetailView):
 
     model = models.Brother
     template_name = 'account/account.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        """If a user is not logged in, take them to login. If logged in, take them to account page."""
-        if request.user.is_authenticated():
-            return super(AccountView, self).dispatch(request, *args, **kwargs)
-        else:
-            return HttpResponseRedirect('/account/login')
-
-    def get_object(self):
+    def get(self, request, *args, **kwargs):
         """Load the member"""
         return get_object_or_404(models.Brother, slug=self.request.user.username)
 
 
-class UpdateAccountView(generic.UpdateView):
+class UpdateAccountView(LoginRequiredMixin, generic.UpdateView):
 
     model = models.Brother
     template_name = 'account/update.html'
@@ -71,7 +77,7 @@ Profile Views
 class ProfileView(generic.DetailView):
 
     model = models.Brother
-    template_name = 'brother/profile.html'
+    template_name = 'profile/profile.html'
 
     def get_object(self):
         """Load the brother"""
@@ -82,10 +88,22 @@ class ProfileView(generic.DetailView):
             return HttpResponseRedirect('/profile/%s' % username)
 
 
+class GroupsView(generic.DetailView):
+
+    model = models.Group
+    template_name = 'group/group.html'
+
+
 """
 Group Views
 """
 class GroupView(generic.DetailView):
 
     model = models.Group
-    template_name = 'brother/group.html'
+    template_name = 'group/group.html'
+
+
+class CreateGroupView(generic.CreateView):
+
+    model = models.Group
+    template_name = 'group/group.html'
